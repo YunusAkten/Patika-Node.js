@@ -22,7 +22,6 @@ app.get('/add_post', (req, res) => {
   res.render("add_post")
 });
 app.post('/posts', async(req, res) => {
-  console.log(req.body);
   await Post.create(req.body)
  res.redirect("/")
 });
