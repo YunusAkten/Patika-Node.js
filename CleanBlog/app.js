@@ -1,20 +1,33 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const path = require('path');
+const mongoose = require('mongoose');
+const Post = require('./models/Post');
 
-// const blog= { id: 1, title: "Blog title", description: "Blog description" };
 app.use(express.static('public'));
-app.set("view engine", "ejs")
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.render("index")
+app.set("view engine", "ejs");
+mongoose.connect('mongodb://localhost:27017/cleanblog_db')
+
+app.get('/', async(req, res) => {
+    const posts = await Post.find({})
+    res.render("index", {posts} )
 });
 app.get('/about', (req, res) => {
   res.render("about")
-});app.get('/add_post', (req, res) => {
+});
+app.get('/add_post', (req, res) => {
   res.render("add_post")
 });
+app.post('/posts', async(req, res) => {
+  console.log(req.body);
+  await Post.create(req.body)
+ res.redirect("/")
+});
+
+
 app.listen(port, () => {
   console.log('Server is running on port '+port);
 });
