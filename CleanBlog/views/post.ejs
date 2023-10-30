@@ -27,12 +27,20 @@
   <article>
     <div class="container">
       <div class="row">
-       <p><%=post.detail %> </p>
+       <p class="col-12 col-md-8" ><%=post.detail %> </p>
+       <div class="col-12 col-md-4 buttonDiv" >
+        <a href="/posts/edit/<%=post._id%>" class="btn  btn-primary my-1    " >Update Post</a>
+ 
+        <a href="/posts/<%=post._id%>?_method=DELETE" onclick='return confirm("Are you sure you want to delete this post")' class="btn  btn-danger btn   " >Delete Post</a>
+        
+       </div>
       </div>
+      
     </div>
+    
   </article>
-
-  <hr>
+ 
+ <hr>
 
   <!-- Footer -->
   <%- include("partials/_footer.ejs")%>
